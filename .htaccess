@@ -1,0 +1,20 @@
+
+<IfModule mod_headers.c>
+  Header always set Access-Control-Allow-Origin  "http://localhost:4200"
+  Header always set Access-Control-Allow-Methods "GET,POST,PUT,DELETE,OPTIONS"
+  Header always set Access-Control-Allow-Headers "Content-Type, Authorization"
+  Header always set Access-Control-Max-Age       "86400"
+</IfModule>
+
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /Lunette/
+
+  # Si la petición es OPTIONS, devuelve 204 y termina
+  RewriteCond %{REQUEST_METHOD} =OPTIONS
+  RewriteRule ^ - [R=204,L]
+
+  # Todo lo demás sigue y cae en index.php
+  RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>
